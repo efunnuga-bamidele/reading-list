@@ -1,28 +1,11 @@
-import { useEffect, useState } from 'react'
 import BookList from '../components/BookList'
 import BookForm from '../components/BookForm'
+import {useCollection} from '../hooks/useCollection'
 
-//import db from firebase config file
-import { db } from '../firebase/config'
-//import collection, getDocs from firebase/firestore package
-import { collection, getDocs } from 'firebase/firestore'
 
 export default function Home() {
-  const [books, setBooks] = useState(null)
-
-  useEffect(() => {
-    //create a refrence variable using connection method db variable and the collection name in database
-      const ref = collection(db, 'books')
-//using the async .then method we retrieve the snapshot and loop through using the forEach method
-      getDocs(ref)
-        .then((snapshot) => {
-            let results = []
-            snapshot.docs.forEach(doc => {
-              results.push({id: doc.id, ...doc.data()})
-            })
-            setBooks(results)
-        })
-  },[])
+  //using useCollection hook for realtime database collection
+  const { documents: books } = useCollection('books')
 
   return (
     <div>
