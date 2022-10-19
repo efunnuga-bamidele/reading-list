@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 //firebase import 
 import { db } from '../firebase/config'
